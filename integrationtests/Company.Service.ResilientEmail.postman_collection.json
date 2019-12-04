@@ -1,0 +1,332 @@
+{
+	"info": {
+		"_postman_id": "4f44c0a6-fd42-4eaa-a572-83d5c921aa13",
+		"name": "Company.Service.ResilientEmail",
+		"description": "This is an integration test suite for resilient email service ",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Heartbeat works",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "0392caea-8460-458a-b3c6-d2828dfada07",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{BASE_URL}}/heartbeat",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"heartbeat"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Invalid to address throws error",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "a6a43e1c-11b0-4c57-a304-17bca184336f",
+						"exec": [
+							"pm.test(\"Check status code\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.statusCode).to.eql(400);",
+							"});",
+							"",
+							"pm.test(\"Check response\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.statusDetails).to.eql(\"Email addresses needs to be an array of valid emails\");",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"toAddress\": [\"ankan@sircar@gmail.com\"],\n\t\"subject\": \"This is really test subject\",\n\t\"content\": \"This is a test  email\"\n}"
+				},
+				"url": {
+					"raw": "{{BASE_URL}}/sendemail",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"sendemail"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Invalid cc address throws error",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "25a265ec-f9ba-46c1-914b-cac0130f8408",
+						"exec": [
+							"pm.test(\"Check status code\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.statusCode).to.eql(400);",
+							"});",
+							"",
+							"pm.test(\"Check response\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.statusDetails).to.eql(\"Email addresses needs to be an array of valid emails\");",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"toAddress\": [\"ankan.sircar@gmail.com\"],\n\t\"ccAddress\": [\"\"],\n\t\"subject\": \"This is really test subject\",\n\t\"content\": \"This is a test content\"\n}"
+				},
+				"url": {
+					"raw": "{{BASE_URL}}/sendemail",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"sendemail"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Invalid bcc address throws error",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "79cbdb58-efeb-45bf-9ce1-180cecf4b410",
+						"exec": [
+							"pm.test(\"Check status code\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.statusCode).to.eql(400);",
+							"});",
+							"",
+							"pm.test(\"Check response\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.statusDetails).to.eql(\"Email addresses needs to be an array of valid emails\");",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"toAddress\": [\"ankan.sircar@gmail.com\"],\n\t\"bccAddress\": [\"\"],\n\t\"subject\": \"This is really test subject\",\n\t\"content\": \"This is a test content\"\n}"
+				},
+				"url": {
+					"raw": "{{BASE_URL}}/sendemail",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"sendemail"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Missing content throws error",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "76f88491-bfd9-4bc2-8187-b3e4d030dde7",
+						"exec": [
+							"pm.test(\"Check status code\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.statusCode).to.eql(400);",
+							"});",
+							"",
+							"pm.test(\"Check response\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.statusDetails).to.eql(\"Content and subject needs value of type string\");",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"toAddress\": [\"ankan.sircar@gmail.com\"],\n\t\"subject\": \"This is really test subject\",\n\t\"content\": \"\"\n}"
+				},
+				"url": {
+					"raw": "{{BASE_URL}}/sendemail",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"sendemail"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Missing subject throws error",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "76f88491-bfd9-4bc2-8187-b3e4d030dde7",
+						"exec": [
+							"pm.test(\"Check status code\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.statusCode).to.eql(400);",
+							"});",
+							"",
+							"pm.test(\"Check response\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.statusDetails).to.eql(\"Content and subject needs value of type string\");",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"toAddress\": [\"ankan.sircar@gmail.com\"],\n\t\"subject\": \"\",\n\t\"content\": \"This is a test content\"\n}"
+				},
+				"url": {
+					"raw": "{{BASE_URL}}/sendemail",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"sendemail"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Valid request sends email",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "a6a43e1c-11b0-4c57-a304-17bca184336f",
+						"exec": [
+							"pm.test(\"Status code is 202\", function () {",
+							"    pm.response.to.have.status(202);",
+							"});",
+							"",
+							"pm.test(\"Valid response returns\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.statusDetails).to.eql(\"Send email request successfully accepted.\");",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"toAddress\": [\"ankan.sircar@gmail.com\"],\n\t\"ccAddress\": [\"uma.sarkar0400@gmail.com\"],\n\t\"bccAddress\": [\"seudoapps@gmail.com\"],\n\t\"subject\": \"This is really test subject\",\n\t\"content\": \"This is a test  email\"\n}"
+				},
+				"url": {
+					"raw": "{{BASE_URL}}/sendemail",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"sendemail"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
