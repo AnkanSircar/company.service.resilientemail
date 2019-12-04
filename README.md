@@ -41,18 +41,18 @@ Please install the following components beforehand to make sure local system is 
   * Import the environment `localhost.postman_environment.json` if want to run against local instance 
   
   
-  ## Whats missing to make it production ready 
+ ## Whats missing to make it production ready 
   
-  * Even though unit tests been included as part of the code, more tests need to be written to have better code coverage. 
-  * Need in depth code review to ensure code quality e.x. code reusability in sendemail can be improved.  
-  * Validation error messages can be more use friendly. Also centralized error message will improve code quality. 
-  * More test coverage in integration testing need to be ensured. 
-  * At the moment code is hosted in aws in serverless fashion, need to use some framework e.x. serverless to ensure code runs the same way in an environment as it runs locally. 
-  * Authentication needs to thought through, planned to use API key to act as a first line of defense.
+ * Even though unit tests been included as part of the code, more tests need to be written to have better code coverage. 
+ * Need in depth code review to ensure code quality e.x. code reusability in sendemail can be improved.  
+ * Validation error messages can be more use friendly. Also centralized error message will improve code quality. 
+ * More test coverage in integration testing need to be ensured. 
+ * At the moment code is hosted in aws in serverless fashion, need to use some framework e.x. serverless to ensure code runs the same way in an environment as it runs locally. 
+ * Authentication needs to thought through, planned to use API key to act as a first line of defense.
   
-  ## Technology choices 
+ ## Technology choices 
   
-  * NodeJS been chosen to run the backend, as its light weight, event driven and efficient. 
-  * Mocha is used as a test framework 
-  * Config is used to control the application configuration in a more modular way
-  * Nodemon to facilitate local development 
+ * NodeJS been chosen to run the backend, as its light weight, event driven and efficient. 
+ * Mocha is used as a test framework 
+ * Config is used to control the application configuration in a more modular way
+ * Nodemon to facilitate local development 
