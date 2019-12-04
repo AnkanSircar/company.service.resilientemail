@@ -9,17 +9,35 @@ const apiUrl = `https://api:${apikey}@api.mailgun.net/v3/${domainName}/messages`
 const sender = 'Unique App <ankan.sircar@gmail.com>';
 
 const getEmailBody = (mail) => {        
+    let emailBody = {};
+    emailBody.from = sender;
+    emailBody.subject = mail.subject;
+    emailBody.text = mail.content;
+    
     let toAddresses = [];
+    let ccAddresses = [];
+    let bccAddresses = [];
+
     mail.toAddress.forEach((item )=> {
         toAddresses.push(item); 
     });
+    emailBody.to = toAddresses.join(',');
     
-    return querystring.stringify({
-        from: sender,
-        to: toAddresses.join(','),
-        subject: mail.subject,
-        text: mail.content
-    });  
+    if(mail.ccAddress.length != 0) {
+        mail.ccAddress.forEach((item )=> {
+            ccAddresses.push(item); 
+        });
+        emailBody.cc = ccAddresses.join(',');
+    }
+    
+    if(mail.bccAddress.length != 0) {
+        mail.bccAddress.forEach((item )=> {
+            bccAddresses.push(item); 
+        });
+        emailBody.bcc = bccAddresses.join(',');
+    }
+    
+    return querystring.stringify(emailBody);  
 };
 
 module.exports = function(mailDetails) {

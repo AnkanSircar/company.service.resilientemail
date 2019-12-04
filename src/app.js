@@ -11,7 +11,7 @@ const port = config.get('port');
 app.use(bodyparser.json());
 app.use(bodyparser.urlencoded({extended:false}));
 
-app.use('/api/', heartbeatRouter);
+app.use('/api/v1/', heartbeatRouter);
 
 app.use('/api/v1/', sendemailRouter);
 

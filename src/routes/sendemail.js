@@ -1,7 +1,7 @@
 const express = require('express');
-const validateemailrequest = require('../validation/validateemailrequest');
-const mailgun_send_email = require('../externalapi/mailgun_send_email');
-const sendgrid_send_email = require('../externalapi/sendgrid_send_email');
+const validateemailrequest = require('../validation/validate_email');
+const mailgun_send_email = require('../external-api/mailgun_send_email');
+const sendgrid_send_email = require('../external-api/sendgrid_send_email');
 
 const router = express.Router();
 
@@ -20,7 +20,7 @@ router.post('/sendemail', async(req, res)=>{
         
         if(mailgunResponse) {
             let statusCode = 202;
-            let statusDetails = 'Send email request accepted to process.';
+            let statusDetails = 'Send email request successfully accepted.';
             res.status(statusCode).send({statusCode, statusDetails});
         }
         else {
@@ -28,7 +28,7 @@ router.post('/sendemail', async(req, res)=>{
 
             if(sendgridResponse) {
                 let statusCode = 202;
-                let statusDetails = 'Send email request accepted to process.';
+                let statusDetails = 'Send email request successfully accepted.';
                 res.status(statusCode).send({statusCode, statusDetails});    
             }
             else {

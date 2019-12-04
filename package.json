@@ -1,7 +1,7 @@
 {
-  "name": "api.resilientemailservice",
+  "name": "company.service.resilientemail",
   "version": "1.0.0",
-  "description": "An api to provide resilient email service ",
+  "description": "An api to provide resilient email service",
   "main": "app.js",
   "scripts": {
     "build": "babel src -d dist --source-maps",
