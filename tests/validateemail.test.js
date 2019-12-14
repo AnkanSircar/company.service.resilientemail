@@ -2,7 +2,8 @@ const {expect} = require('chai');
 const validation = require('../src/validation/validate_email');
 
 const emailValidationErrorMessage = "Email addresses needs to be an array of valid emails";
-const contentAndSubjectValidationErrorMessage = "Content and subject needs value of type string";
+const contentValidationErrorMessage = "Content needs value of type string";
+const subjectValidationErrorMessage = "Subject needs value of type string";
 const payloadValidationErrorMessage = "Send email payload can't be empty";
 
 
@@ -17,7 +18,9 @@ describe('Validation', () => {
 
     it('tests that if toAddress is empty array, validation failed with error', async() => {
         let emailRequest = {
-            toAddress: []
+            toAddress: [],
+            content: 'test content',
+            subject: 'test subject'
         };
         let validationResult = await validation(emailRequest);
         expect(validationResult.isValid).to.equal(false);     
@@ -50,6 +53,7 @@ describe('Validation', () => {
     it('tests that if bccAddress contains incorrect emails, validation failed with error', async() => {
         let emailRequest = {
             toAddress: ['test1@test.com', 'test2@test.com'],
+            ccAddress: ['test3@test.com', 'test4@test.com'],
             bccAddress: ['test.test.com'],
             content: 'test content',
             subject: 'test subject'
@@ -65,7 +69,23 @@ describe('Validation', () => {
         };
         let validationResult = await validation(emailRequest);
         expect(validationResult.isValid).to.equal(false);     
-        expect(validationResult.error).to.equal(contentAndSubjectValidationErrorMessage);
+        expect(validationResult.error).to.equal(contentValidationErrorMessage);
+    });
+
+    it('tests that if ccAddress is undefined, validation passed and correct response returned', async() => {
+        let emailRequest = {
+            toAddress: ['test1@test.com', 'test2@test.com'],            
+            bccAddress: ['test5@test.com', 'test6@test.com'],
+            content: 'test content',
+            subject: 'test subject'
+        };
+        let validationResult = await validation(emailRequest);
+        expect(validationResult.isValid).to.equal(true);     
+        expect(validationResult.error).to.equal(null);
+        expect(validationResult.data.content).to.equal('test content');
+        expect(validationResult.data.subject).to.equal('test subject');
+        expect(validationResult.data.toAddress).to.equal(emailRequest.toAddress);        
+        expect(validationResult.data.bccAddress).to.equal(emailRequest.bccAddress);
     });
 
     it('tests that if valid payload provided, validation passed and correct response returned', async() => {
