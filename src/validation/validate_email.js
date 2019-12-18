@@ -55,8 +55,9 @@ const validation = (rawEmailPayload) =>
     : isValidEmailArray(rawEmailPayload.bccAddress) && !emailArrayValidation(rawEmailPayload.bccAddress)? errorMessage(emailValidationErrorMessage)
     : validMessage(rawEmailPayload);
 
-module.exports = function(rawEmailPayload) {    
-    return new Promise(function(resolve, reject){
+
+export default function (rawEmailPayload) { 
+    return new Promise(function(resolve, reject) {
         resolve(validation(rawEmailPayload));
     });
 };
