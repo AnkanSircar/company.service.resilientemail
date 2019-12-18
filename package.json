@@ -4,10 +4,10 @@
   "description": "An api to provide resilient email service",
   "main": "app.js",
   "scripts": {
-    "build": "babel src -d dist --source-maps",
-    "dev": "nodemon src/app.js --exec babel-node",
-    "start": "node ./src/app.js",
-    "test": "mocha --require babel-core/register --reporter spec --exit   tests/ --exec babel-node"
+    "buildDev": "rmdir /s /q dist && webpack --mode development --config webpack.server.config.js",
+    "buildProd": "rmdir /s /q dist && webpack --mode production --config webpack.server.config.js",
+    "start": "node ./dist/server.js",
+    "test": "mocha --reporter spec --exit   tests/ --exec babel-node"
   },
   "keywords": [
     "node",
@@ -25,10 +25,20 @@
     "request": "^2.88.0"
   },
   "devDependencies": {
-    "@babel/preset-env": "^7.7.4",
-    "babel-cli": "^6.26.0",
+    "@babel/cli": "^7.0.0",
+    "@babel/core": "^7.7.5",
+    "@babel/node": "^7.0.0",
+    "@babel/preset-env": "^7.7.6",
+    "babel-eslint": "^10.0.3",
+    "babel-loader": "^8.0.6",
     "chai": "^4.2.0",
+    "eslint": "^6.7.2",
+    "eslint-loader": "^3.0.3",
     "mocha": "^6.2.2",
-    "nodemon": "^2.0.1"
+    "nodemon": "^2.0.1",
+    "webpack": "^4.41.3",
+    "webpack-cli": "^3.3.10",
+    "webpack-dev-middleware": "^3.7.2",
+    "webpack-node-externals": "^1.7.2"
   }
 }
