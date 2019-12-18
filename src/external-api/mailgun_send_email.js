@@ -40,7 +40,7 @@ const getEmailBody = (mail) => {
     return querystring.stringify(emailBody);  
 };
 
-module.exports = function(mailDetails) {
+export default function(mailDetails) {
     return new Promise((resolve, reject)=>{
         request({
             rejectUnauthorized: false,

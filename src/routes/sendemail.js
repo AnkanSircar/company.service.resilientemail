@@ -1,7 +1,7 @@
-const express = require('express');
-const validateemailrequest = require('../validation/validate_email');
-const mailgun_send_email = require('../external-api/mailgun_send_email');
-const sendgrid_send_email = require('../external-api/sendgrid_send_email');
+import express from 'express';
+import validateemailrequest from'../validation/validate_email';
+import mailgun_send_email from'../external-api/mailgun_send_email';
+import sendgrid_send_email from'../external-api/sendgrid_send_email';
 
 const router = express.Router();
 
@@ -41,4 +41,5 @@ router.post('/sendemail', async(req, res)=>{
 
 });
 
-module.exports = router;
+export default router;
+

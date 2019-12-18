@@ -47,7 +47,7 @@ const getEmailBody = (mail) => {
     return JSON.stringify(requestSendMail);
 };
 
-module.exports = function(mailDetails) {
+export default function(mailDetails) {
     return new Promise((resolve, reject)=>{
         request({
             rejectUnauthorized: false,

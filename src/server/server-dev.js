@@ -2,8 +2,8 @@
 import express from 'express';
 const bodyparser = require('body-parser');
 const config = require('config');
-const heartbeatRouter = require('../routes/heartbeat');
-const sendemailRouter = require('../routes/sendemail');
+import heartbeatRouter from '../routes/heartbeat';
+import sendemailRouter from '../routes/sendemail';
 
 
 const app = express();
@@ -20,11 +20,7 @@ const listen = app.listen(port, () => {
     console.log(`app is listening on port ${port}`);    
 });
 
-
-// module.exports = app;
-// module.exports.port = listen.address().port;
-
-export default {
-    app, 
-    port : listen.address().port
-};
+// export default {
+//     app, 
+//     port : listen.address().port
+// };
