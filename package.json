@@ -7,6 +7,7 @@
     "buildDev": "rmdir /s /q dist && webpack --mode development --config webpack.server.config.js",
     "buildProd": "rmdir /s /q dist && webpack --mode production --config webpack.server.config.js",
     "start": "node ./dist/server.js",
+    "pretest": "eslint --ignore-path .gitignore .",
     "test": "mocha --reporter spec --exit   tests/ --exec babel-node"
   },
   "keywords": [
@@ -21,6 +22,7 @@
     "body-parser": "^1.19.0",
     "config": "^3.2.4",
     "express": "^4.17.1",
+    "prettier": "^1.19.1",
     "querystring": "^0.2.0",
     "request": "^2.88.0"
   },
@@ -34,6 +36,7 @@
     "babel-plugin-transform-runtime": "^6.23.0",
     "chai": "^4.2.0",
     "eslint": "^6.7.2",
+    "eslint-config-strongloop": "^2.1.0",
     "eslint-loader": "^3.0.3",
     "mocha": "^6.2.2",
     "nodemon": "^2.0.1",
