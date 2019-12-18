@@ -1,8 +1,9 @@
-const express = require('express');
+// const express = require('express');
+import express from 'express';
 const bodyparser = require('body-parser');
 const config = require('config');
-const heartbeatRouter = require('./routes/heartbeat');
-const sendemailRouter = require('./routes/sendemail');
+const heartbeatRouter = require('../routes/heartbeat');
+const sendemailRouter = require('../routes/sendemail');
 
 
 const app = express();
