@@ -1,11 +1,11 @@
 {
     "port": 3000,
     "mailgun": {
-        "apiKey":"8f329bddcdee668e4dde0528a3b3053d-e470a504-10f99faa",
-        "domainName":"sandbox9f1794588ad44b429e2e4639a8ea5ff6.mailgun.orgs"        
+        "apiKey":"",
+        "domainName":""        
     },
     "sendgrid": {
-        "apiKey":"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",
+        "apiKey":"",
         "apiUrl":"https://api.sendgrid.com/v3/mail/send"
     }
 }
