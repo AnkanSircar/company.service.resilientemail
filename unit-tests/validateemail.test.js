@@ -1,5 +1,5 @@
 import {expect} from 'chai';
-import validation from '../src/validation/validate_email';
+import validation from '../src/validation/validateemail';
 
 const emailValidationErrorMessage =
   'Email addresses needs to be an array of valid emails';

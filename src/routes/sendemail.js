@@ -1,39 +1,41 @@
 import express from 'express';
-import validateemailrequest from '../validation/validate_email';
-import mailgun_send_email from '../external-api/mailgun_send_email';
-import sendgrid_send_email from '../external-api/sendgrid_send_email';
+import validateEmail from '../validation/validateemail';
+import mailgunSendEmail from '../external-api/mailgun-sendemail';
+import sendgridSendEmail from '../external-api/sendgrid-sendemail';
 
 const router = express.Router();
 
+const badRequestStatusCode = 400;
+const acceptedStatusCode = 202;
+const serviceUnavailableStatusCode = 503;
+const successStatusDetails = 'Send email request successfully accepted.';
+const serviceUnavailableStatusDetails = 'Sorry email service is not available at the moment. Please try again later.';
+
+const sendEmail = async (data) => {
+  try {    
+    let mailgunResponse = await mailgunSendEmail(data);  
+    console.log(`Response from mailgun ${mailgunResponse}`);          
+  } catch (error) {
+    console.log(`Error Response from mailgun ${error}`);
+    let sendgridResponse = await sendgridSendEmail(data);
+    console.log(`Response from sendgrid ${sendgridResponse}`);
+  }
+};
+
 router.post('/sendemail', async(req, res) => {
   const emailRequest = req.body;
-  let validationResult = await validateemailrequest(emailRequest);
+  let validationResult = await validateEmail(emailRequest);
 
   if (!validationResult.isValid) {
-    let statusCode = 400;
     let statusDetails = validationResult.error;
-    res.status(statusCode).send({statusCode, statusDetails});
+    res.status(badRequestStatusCode).send({statusCode:badRequestStatusCode, statusDetails});
   } else {
-    let mailgunResponse = await mailgun_send_email(validationResult.data);
-
-    if (mailgunResponse) {
-      let statusCode = 202;
-      let statusDetails = 'Send email request successfully accepted.';
-      res.status(statusCode).send({statusCode, statusDetails});
-    } else {
-      let sendgridResponse = sendgrid_send_email(emailRequest);
-
-      if (sendgridResponse) {
-        let statusCode = 202;
-        let statusDetails = 'Send email request successfully accepted.';
-        res.status(statusCode).send({statusCode, statusDetails});
-      } else {
-        let statusCode = 503;
-        let statusDetails =
-          'Sorry email service is not available at the moment. Please try again later.';
-        res.status(statusCode).send({statusCode, statusDetails});
+      try {
+        await sendEmail(validationResult.data);
+        res.status(acceptedStatusCode).send({statusCode:acceptedStatusCode, statusDetails:successStatusDetails});
+      } catch (error) {
+        res.status(serviceUnavailableStatusCode).send({statusCode:serviceUnavailableStatusCode, statusDetails:serviceUnavailableStatusDetails});
       }
-    }
   }
 });
 

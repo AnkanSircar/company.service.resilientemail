@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "4f44c0a6-fd42-4eaa-a572-83d5c921aa13",
+		"_postman_id": "2f402461-11da-42f8-a1db-b42d6b5c9cf7",
 		"name": "Company.Service.ResilientEmail",
 		"description": "This is an integration test suite for resilient email service ",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
@@ -25,10 +25,6 @@
 			"request": {
 				"method": "GET",
 				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": ""
-				},
 				"url": {
 					"raw": "{{BASE_URL}}/heartbeat",
 					"host": [
@@ -200,7 +196,7 @@
 							"",
 							"pm.test(\"Check response\", function () {",
 							"    var jsonData = pm.response.json();",
-							"    pm.expect(jsonData.statusDetails).to.eql(\"Content and subject needs value of type string\");",
+							"    pm.expect(jsonData.statusDetails).to.eql(\"Content needs value of type string\");",
 							"});"
 						],
 						"type": "text/javascript"
@@ -248,7 +244,7 @@
 							"",
 							"pm.test(\"Check response\", function () {",
 							"    var jsonData = pm.response.json();",
-							"    pm.expect(jsonData.statusDetails).to.eql(\"Content and subject needs value of type string\");",
+							"    pm.expect(jsonData.statusDetails).to.eql(\"Subject needs value of type string\");",
 							"});"
 						],
 						"type": "text/javascript"
@@ -328,5 +324,6 @@
 			},
 			"response": []
 		}
-	]
+	],
+	"protocolProfileBehavior": {}
 }
