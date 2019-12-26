@@ -65,8 +65,8 @@ export default function(mailDetails) {
 
         if (!err && res.statusCode === 202) {
           resolve(true);
-        } else {          
-          reject(new Error("Sendgrid failed to send email."));
+        } else {
+          reject(new Error('Sendgrid failed to send email.'));
         }
       }
     );

@@ -39,10 +39,10 @@ const getEmailBody = mail => {
   return querystring.stringify(emailBody);
 };
 
-export default function(mailDetails) { 
+export default function(mailDetails) {
 
-  if(!apikey) {    
-    return Promise.reject(new Error("Missing api key."));
+  if (!apikey) {
+    return Promise.reject(new Error('Missing api key.'));
   }
 
   return new Promise((resolve, reject) => {
@@ -60,8 +60,8 @@ export default function(mailDetails) {
         console.log(`Error from mailgun ${err} ${JSON.stringify(res)}`);
         if (!err && res.statusCode === 200) {
           resolve(true);
-        } else {          
-          reject(new Error("Mailgun failed to send email."))
+        } else {
+          reject(new Error('Mailgun failed to send email.'));
         }
       }
     );

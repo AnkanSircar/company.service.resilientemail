@@ -1,4 +1,4 @@
-const emailValidationErrorMessage =  'Email addresses needs to be an array of valid emails';
+const emailValidationErrorMessage = 'Email addresses needs to be an array of valid emails';
 const contentValidationErrorMessage = 'Content needs value of type string';
 const subjectValidationErrorMessage = 'Subject needs value of type string';
 const payloadValidationErrorMessage = "Send email payload can't be empty";
