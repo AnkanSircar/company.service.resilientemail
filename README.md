@@ -32,19 +32,20 @@ Please install the following components beforehand to make sure local system is 
 
 * Run `npm install` in root directory to install dependent packages 
 * Update the config `default.json` with relevant API key, domain name and url. A separate communication on that should happen already. 
-* Run `npm run test` to execute the unit tests 
-* Run `npm run dev` to run the app 
+* Run `npm run test` to execute the eslint and unit tests 
+* Run `npm run builddev` to build the app in `development` mode or 
+* Run `npm run buildprod` to build the app in `production` mode
+* Run `npm run start` to run the app 
 * Navigate to a browser or postman app to run `http://localhost:3000/api/v1/heartbeat` to verify the app is responding 
 * If want to get a quick understanding of how the app works, launch the postman app 
-  * Import the collection `Company.Service.ResilientEmail.postman_collection.json` from `..\company.service.resilientemail\integrationtests`
-  * Import the environment `Development.postman_environment.json` if want to run against the development environment 
+  * Import the collection `company.service.resilientemail.postman_collection.json` from `..\company.service.resilientemail\integrationtests`
+  * Import the environment `development.postman_environment.json` if want to run against the development environment 
   * Import the environment `localhost.postman_environment.json` if want to run against local instance 
   
   
  ## Whats missing to make it production ready 
   
  * Even though unit tests been included as part of the code, more tests need to be written to have better code coverage. 
- * Need in depth code review to ensure code quality e.x. code reusability in sendemail can be improved.  
  * Validation error messages can be more use friendly. Also centralized error message will improve code quality. 
  * More test coverage in integration testing need to be ensured. 
  * At the moment code is hosted in aws in serverless fashion, need to use some framework e.x. serverless to ensure code runs the same way in an environment as it runs locally. 
@@ -55,4 +56,5 @@ Please install the following components beforehand to make sure local system is 
  * NodeJS been chosen to run the backend, as its light weight, event driven and efficient. 
  * Mocha is used as a test framework 
  * Config is used to control the application configuration in a more modular way
- * Nodemon to facilitate local development 
+ * Webpack to bundle the code 
+ * Babel been used to transpile so that latest ecma script version can be used 
