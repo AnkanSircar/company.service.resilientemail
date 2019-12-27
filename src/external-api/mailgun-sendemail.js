@@ -7,36 +7,28 @@ const domainName = config.get('mailgun.domainName');
 const apiUrl = `https://api:${apikey}@api.mailgun.net/v3/${domainName}/messages`;
 const sender = 'Unique App <ankan.sircar@gmail.com>';
 
-const getEmailBody = mail => {
-  let emailBody = {};
-  emailBody.from = sender;
-  emailBody.subject = mail.subject;
-  emailBody.text = mail.content;
-
-  let toAddresses = [];
-  let ccAddresses = [];
-  let bccAddresses = [];
-
-  mail.toAddress.forEach(item => {
-    toAddresses.push(item);
+const getFormattedEmailArray = sourceArray => {
+  let destinationArray = [];
+  sourceArray.forEach(item => {
+    destinationArray.push(item);
   });
-  emailBody.to = toAddresses.join(',');
+  return destinationArray.join(',');
+};
 
-  if (mail.ccAddress.length !== 0) {
-    mail.ccAddress.forEach(item => {
-      ccAddresses.push(item);
-    });
-    emailBody.cc = ccAddresses.join(',');
+const getRequestBody = emailDetails => {
+  let requestBody = {
+    from: sender,
+    subject: emailDetails.subject,
+    text: emailDetails.content,
+    to: getFormattedEmailArray(emailDetails.toAddress),
+  };
+  if (emailDetails.ccAddress.length !== 0) {
+    requestBody.cc = getFormattedEmailArray(emailDetails.ccAddress);
   }
-
-  if (mail.bccAddress.length !== 0) {
-    mail.bccAddress.forEach(item => {
-      bccAddresses.push(item);
-    });
-    emailBody.bcc = bccAddresses.join(',');
+  if (emailDetails.bccAddress.length !== 0) {
+    requestBody.bcc = getFormattedEmailArray(emailDetails.bccAddress);
   }
-
-  return querystring.stringify(emailBody);
+  return querystring.stringify(requestBody);
 };
 
 export default function(mailDetails) {
@@ -53,7 +45,7 @@ export default function(mailDetails) {
           'Content-Type': 'application/x-www-form-urlencoded',
         },
         uri: apiUrl,
-        body: getEmailBody(mailDetails),
+        body: getRequestBody(mailDetails),
         method: 'POST',
       },
       (err, res, body) => {

@@ -4,8 +4,8 @@
   "description": "An api to provide resilient email service",
   "main": "app.js",
   "scripts": {
-    "buildDev": "rmdir /s /q dist && webpack --mode development --config webpack.server.config.js",
-    "buildProd": "rmdir /s /q dist && webpack --mode production --config webpack.server.config.js",
+    "builddev": "rmdir /s /q dist && webpack --mode development --config webpack.server.config.js",
+    "buildprod": "rmdir /s /q dist && webpack --mode production --config webpack.server.config.js",
     "start": "node ./dist/server.js",
     "pretest": "eslint --ignore-path .gitignore .",
     "test": "mocha unit-tests/**/**test.js --require @babel/register --reporter spec || exit 0'"

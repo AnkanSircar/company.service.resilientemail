@@ -6,48 +6,46 @@ const apiKey = config.get('sendgrid.apiKey');
 const senderEmail = 'ankan.sircar@gmail.com';
 const senderName = 'Unique App';
 
-const getEmailBody = mail => {
-  let requestSendMail = {};
-  let personalization = {};
-
-  let to = [];
-  let cc = [];
-  let bcc = [];
-
-  mail.toAddress.forEach(item => {
-    to.push({email: item});
+const getFormattedEmailArray = emailAddress => {
+  let fromattedEmailArray = [];
+  emailAddress.forEach(item => {
+    fromattedEmailArray.push({email: item});
   });
-  personalization.to = to;
-  personalization.subject = mail.subject;
-
-  if (mail.ccAddress.length !== 0) {
-    mail.ccAddress.forEach(item => {
-      cc.push({email: item});
-    });
-    personalization.cc = cc;
-  }
-
-  if (mail.bccAddress.length !== 0) {
-    mail.bccAddress.forEach(item => {
-      bcc.push({email: item});
-    });
-    personalization.bcc = bcc;
-  }
-
-  let personalizations = [];
-  personalizations.push(personalization);
-
-  let content = [];
-  content.push({type: 'text/plain', value: mail.content});
-
-  requestSendMail.personalizations = personalizations;
-  requestSendMail.content = content;
-  requestSendMail.from = {email: senderEmail, name: senderName};
-
-  return JSON.stringify(requestSendMail);
+  return fromattedEmailArray;
 };
 
-export default function(mailDetails) {
+const getPersonalizationObject = mail => {
+  let personalization = {
+    to: getFormattedEmailArray(mail.toAddress),
+    subject: mail.subject,
+  };
+  if (mail.ccAddress.length !== 0) {
+    personalization.cc = getFormattedEmailArray(mail.ccAddress);
+  }
+  if (mail.bccAddress.length !== 0) {
+    personalization.bcc = getFormattedEmailArray(mail.bccAddress);
+  }
+  return personalization;
+};
+
+const getRequestBody = emailDetails => {
+  let personalizations = [];
+  personalizations.push(getPersonalizationObject(emailDetails));
+  let content = [];
+  content.push({type: 'text/plain', value: emailDetails.content});
+
+  let sendEmailRequest = {
+    personalizations,
+    content,
+    from: {
+      email: senderEmail,
+      name: senderName,
+    },
+  };
+  return JSON.stringify(sendEmailRequest);
+};
+
+export default function(emailDetails) {
   return new Promise((resolve, reject) => {
     request(
       {
@@ -57,12 +55,10 @@ export default function(mailDetails) {
           authorization: 'Bearer ' + apiKey,
         },
         uri: apiUrl,
-        body: getEmailBody(mailDetails),
+        body: getRequestBody(emailDetails),
         method: 'POST',
       },
       (err, res, body) => {
-        console.log(`Error from sendgrid ${err} ${JSON.stringify(res)}`);
-
         if (!err && res.statusCode === 202) {
           resolve(true);
         } else {

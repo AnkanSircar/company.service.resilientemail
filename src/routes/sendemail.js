@@ -1,5 +1,5 @@
 import express from 'express';
-import validateEmail from '../validation/validateemail';
+import validateEmail from '../validation/validatepayload';
 import mailgunSendEmail from '../external-api/mailgun-sendemail';
 import sendgridSendEmail from '../external-api/sendgrid-sendemail';
 
